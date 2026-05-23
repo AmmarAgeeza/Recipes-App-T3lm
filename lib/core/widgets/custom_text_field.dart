@@ -3,7 +3,7 @@ import '../constants/app_import.dart';
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     super.key,
-    required this.label,
+    this.label,
     required this.hint,
     this.icon,
     this.obscureText = false,
@@ -15,7 +15,7 @@ class CustomTextField extends StatelessWidget {
     this.showVisibilityToggle = false,
   });
 
-  final String label;
+  final String? label;
   final String hint;
   final IconData? icon;
   final bool obscureText;
@@ -32,11 +32,13 @@ class CustomTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 4, top: AppSizes.inputLabelTop),
-          child: Text(label, style: AppTextStyles.inputLabel),
-        ),
-        const SizedBox(height: 4),
+        if (label != null) ...[
+          Padding(
+            padding: const EdgeInsets.only(left: 4, top: AppSizes.inputLabelTop),
+            child: Text(label!, style: AppTextStyles.inputLabel),
+          ),
+          const SizedBox(height: 4),
+        ],
         SizedBox(
           height: AppSizes.inputHeight,
           child: TextField(

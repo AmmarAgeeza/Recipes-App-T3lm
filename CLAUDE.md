@@ -363,9 +363,39 @@ class MyApp extends StatelessWidget {
 
 1. **Check existing patterns** — open 1-2 sibling features to match style.
 2. **Reuse `lib/core/widgets/`** shared components before creating duplicates.
-3. **Extract widgets** — keep screens lean; split into `component/` files at ~150 lines.
+3. **Extract widgets** — keep screens lean; split into `component/` files at ~50 lines.
 4. **List performance** — use `ListView.builder` / slivers for dynamic data, not static `Column` children.
 5. **Narrow rebuilds** — use `buildWhen` in `BlocBuilder` to minimize unnecessary work.
+6. **UI Components (MANDATORY):** ALWAYS use class-based components for UI elements, NOT methods.
+   - Create reusable widgets as separate classes in `lib/features/<feature>/presentation/components/`
+   - NEVER define widget-building methods inside screen files (e.g., no `_buildAppBar()`, `_buildCard()`)
+   - Each component should be its own `StatelessWidget` or `StatefulWidget` class in its own file
+   - Import and use components in screens, keeping screens clean and declarative
+
+```dart
+// ❌ BAD — method-based widget in screen file
+class MyScreen extends StatelessWidget {
+  Widget _buildAppBar(BuildContext context) { ... }
+  Widget _buildCard(Model data) { ... }
+}
+
+// ✅ GOOD — separate class-based components
+// lib/features/home/presentation/components/app_bar.dart
+class HomeAppBar extends StatelessWidget { ... }
+
+// lib/features/home/presentation/components/recipe_card.dart
+class RecipeCard extends StatelessWidget { ... }
+
+// lib/features/home/presentation/screens/home_screen.dart
+class HomeScreen extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: HomeAppBar(),
+      body: ListView(... RecipeCard(...) ...),
+    );
+  }
+}
+```
 
 
 # 🚀 Final Principle
