@@ -12,10 +12,14 @@ presentation → data
 lib/features/<feature>/
   ├── presentation/   → Screens, component/ widgets, Cubits
   ├── data/           → Repos, Models, API Params
+
+lib/core/             → Shared utilities, constants, themes, widgets
+lib/app/              → App-level configuration (MyApp, etc.)
 ```
 
 - Mirror the layout of existing sibling features. Do not invent a parallel structure.
 - Shared/core code lives in `lib/core/`.
+- **App-level widgets** (like `MyApp`) MUST live in `lib/app/`, not in `main.dart`.
 
 
 ### Responsibilities:
@@ -96,6 +100,13 @@ Future<Either<String, UserModel>> getProfile();
  - Use status enums (e.g., BottomState, RequestState) to track loading/success/error statuses for different fields/operations within that single state.
  - Mix UI-specific state fields (e.g., password visibility toggles, button loading states, error messages) directly inside this single state class.
  - Always implement a robust copyWith method and override props with all state fields to maintain proper reactivity.
+- **State File Separation (MANDATORY):** Each Cubit's State class MUST be in a separate file named `<feature>_state.dart` in the same directory as the Cubit.
+ - Enums used by states MUST be centralized in `lib/core/constants/app_enums.dart`.
+ - Do NOT define State classes or enums inside the Cubit file.
+- **BlocObserver (MANDATORY):** All Cubit state changes MUST be observed using `BlocObserver`.
+ - Create a custom `AppBlocObserver` in `lib/core/bloc/bloc_observer.dart`.
+ - Set the observer in `main.dart` using `Bloc.observer = AppBlocObserver()`.
+ - Use observer for logging all state changes, transitions, and errors.
 
 ## 8) Project Assets
 
@@ -104,6 +115,20 @@ Future<Either<String, UserModel>> getProfile();
 | Images | `assets/images/` |
 | Icons | `assets/icons/` |
 | Fonts | `assets/fonts/` |
+
+### Asset Management Rules (MANDATORY)
+- **Font Usage:** ALWAYS use fonts from `assets/fonts/` directory. NEVER use `google_fonts` package or any external font package in `app_text_styles.dart`.
+- **Image Paths:** NEVER hardcode image paths. Define all image paths in `lib/core/constants/app_assets.dart`.
+- **App Strings:** NEVER hardcode UI strings. Define all user-facing strings in `lib/core/constants/app_strings.dart`.
+```dart
+// ❌ BAD — hardcoded path and string
+Image.asset('assets/images/hero_image.png')
+Text('Welcome Back')
+
+// ✅ GOOD — use constants
+Image.asset(AppImages.hero)
+Text(AppStrings.welcomeBack)
+```
 ---
 
 # ⚙️ Section B — Global Engineering Rules
@@ -194,13 +219,42 @@ Always apply:
 
 ---
 
-## 12) Best Practices
+## 12) Logging (STRICT)
+- **ONLY** use `log()` from `dart:developer` for logging.
+- **NEVER** use `print()` or `debugPrint()` in production code.
+- The `log()` function provides proper logging levels, timestamps, and works in all environments.
+- Use different severity levels: `info`, `fine`, `warning`, `severe`.
+
+```dart
+// ❌ BAD — using print/debugPrint
+print('User logged in');
+debugPrint('Error occurred: $error');
+
+// ✅ GOOD — using log
+import 'dart:developer';
+log('User logged in');
+log('Error occurred', error: error, level: 1000); // severe
+```
+
+---
+
+## 13) No Hardcoded Strings (STRICT)
+- NEVER hardcode:
+  - Image paths → use `AppImages` constants from `lib/core/constants/app_assets.dart`
+  - UI strings → use `AppStrings` constants from `lib/core/constants/app_strings.dart`
+  - Route paths → use `AppRoutes` constants
+  - Any other user-facing text or asset paths
+- All constants must follow naming conventions: `kThingName` or `thingName` based on existing patterns
+
+---
+
+## 14) Best Practices
 - Always follow modern Flutter and Dart best practices
 - Align with production-level standards
 
 ---
 
-## 13) AI Behavior (IMPORTANT)
+## 15) AI Behavior (IMPORTANT)
 - Act as a **senior engineering partner**, not just a code generator
 - Challenge unclear or incorrect assumptions
 - Ask for clarification when needed
@@ -209,7 +263,7 @@ Always apply:
 
 ---
 
-## 14) Naming Conventions
+## 16) Naming Conventions
 
 - Use clear, descriptive, and intention-revealing names
 
@@ -234,12 +288,74 @@ import 'lib/core/util/app_import.dart';
 
 ---
 
-## 15) Import Organization
-- Keep imports clean and ordered:
-  1. Dart imports
-  2. Package imports
-  3. Project imports
-- Prefer centralized/barrel imports when available
+## 17) Import Organization (STRICT)
+
+**MANDATORY:** Use `lib/core/util/app_import.dart` for all common imports across the project.
+
+- **NEVER** use deep/ad-hoc imports repeatedly in multiple files
+- **ALL** common imports (Flutter, packages, core exports) MUST be centralized in `app_import.dart`
+- **ONLY** feature-specific imports should be added directly to files
+
+```dart
+// ❌ BAD — ad-hoc deep imports everywhere
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:equatable/equatable.dart';
+// ...many more
+
+// ✅ GOOD — use centralized app_import
+import '../core/util/app_import.dart';
+
+// ✅ OK — feature-specific imports added alongside app_import
+import '../core/util/app_import.dart';
+import '../../features/auth/presentation/cubits/login_cubit.dart';
+```
+
+**File:** `lib/core/util/app_import.dart` must export:
+- Flutter material/widgets
+- All commonly used packages (flutter_bloc, equatable, dartz, get_it)
+- All core constants, themes, widgets
+- All core utilities
+
+---
+
+---
+
+## 18) App Structure (main.dart & MyApp)
+
+---
+
+## 18) App Structure (main.dart & MyApp)
+
+**MANDATORY:** Keep `main.dart` minimal and clean.
+
+- `main.dart` should ONLY contain:
+  - `main()` function
+  - `WidgetsFlutterBinding.ensureInitialized()` if needed
+  - Service locator initialization
+  - `runApp()` call
+
+- `MyApp` class MUST be in `lib/app/app.dart`
+- All app-level configuration (theme, routes, etc.) belongs in `lib/app/`
+
+```dart
+// ✅ GOOD — clean main.dart
+// lib/main.dart
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  ServiceLocator.setup();
+  runApp(const MyApp());
+}
+
+// lib/app/app.dart
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(/*...*/);
+  }
+}
+```
 
 ---
 
