@@ -26,9 +26,6 @@ export 'app_enums.dart';
 // Core Theme
 export '../theme/app_theme.dart';
 
-// Core Services
-export '../services/service_locator.dart';
-
 // Core Router
 export '../router/app_router.dart';
 

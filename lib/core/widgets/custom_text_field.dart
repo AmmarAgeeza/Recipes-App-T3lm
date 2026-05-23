@@ -34,18 +34,22 @@ class CustomTextField extends StatelessWidget {
       children: [
         if (label != null) ...[
           Padding(
-            padding: const EdgeInsets.only(left: 4, top: AppSizes.inputLabelTop),
+            padding: const EdgeInsets.only(
+              left: 4,
+              top: AppSizes.inputLabelTop,
+            ),
             child: Text(label!, style: AppTextStyles.inputLabel),
           ),
           const SizedBox(height: 4),
         ],
         SizedBox(
           height: AppSizes.inputHeight,
-          child: TextField(
+          child: TextFormField(
             controller: controller,
             obscureText: obscureText,
             keyboardType: keyboardType,
             onChanged: onChanged,
+            validator: validator,
             decoration: InputDecoration(
               hintText: hint,
               hintStyle: AppTextStyles.inputHint,
@@ -55,6 +59,7 @@ class CustomTextField extends StatelessWidget {
               ),
               filled: true,
               fillColor: AppColors.inputBackground,
+
               prefixIcon: icon != null
                   ? Padding(
                       padding: const EdgeInsets.only(left: 18, right: 8),
@@ -87,6 +92,7 @@ class CustomTextField extends StatelessWidget {
                 minWidth: 40,
                 maxWidth: 40,
               ),
+
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppSizes.borderRadiusInput),
                 borderSide: const BorderSide(
@@ -107,6 +113,10 @@ class CustomTextField extends StatelessWidget {
                   color: AppColors.primary,
                   width: 1,
                 ),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(AppSizes.borderRadiusInput),
+                borderSide: const BorderSide(color: AppColors.error, width: 1),
               ),
             ),
           ),

@@ -6,14 +6,14 @@ class CustomButton extends StatelessWidget {
     required this.text,
     this.onPressed,
     this.isLoading = false,
-    this.isEnabled = true,
+
     this.width,
   });
 
   final String text;
   final VoidCallback? onPressed;
   final bool isLoading;
-  final bool isEnabled;
+
   final double? width;
 
   @override
@@ -22,14 +22,16 @@ class CustomButton extends StatelessWidget {
       width: width ?? double.infinity,
       height: AppSizes.buttonHeight,
       child: ElevatedButton(
-        onPressed: isEnabled && !isLoading ? onPressed : null,
+        onPressed: !isLoading ? onPressed : null,
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
           foregroundColor: AppColors.primaryText,
           disabledBackgroundColor: AppColors.primary.withValues(alpha: 0.6),
           disabledForegroundColor: AppColors.primaryText.withValues(alpha: 0.6),
           elevation: 0,
-          padding: const EdgeInsets.symmetric(vertical: AppSizes.buttonPaddingVertical),
+          padding: const EdgeInsets.symmetric(
+            vertical: AppSizes.buttonPaddingVertical,
+          ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppSizes.borderRadiusButton),
           ),
@@ -41,7 +43,9 @@ class CustomButton extends StatelessWidget {
                 height: AppSizes.iconSizeMedium,
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
-                  valueColor: AlwaysStoppedAnimation<Color>(AppColors.primaryText),
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    AppColors.primaryText,
+                  ),
                 ),
               )
             : Text(text),

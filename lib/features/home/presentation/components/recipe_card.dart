@@ -4,12 +4,12 @@ import '../../data/models/recipe_model.dart';
 
 class RecipeCard extends StatelessWidget {
   final RecipeModel recipe;
-  final VoidCallback onFavoriteToggle;
+  
 
   const RecipeCard({
     super.key,
     required this.recipe,
-    required this.onFavoriteToggle,
+ 
   });
 
   @override
@@ -76,32 +76,7 @@ class RecipeCard extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            right: 16,
-            top: 16,
-            child: GestureDetector(
-              onTap: onFavoriteToggle,
-              child: Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.2),
-                  shape: BoxShape.circle,
-                ),
-                child: Center(
-                  child: Icon(
-                    recipe.isFavorite
-                        ? Icons.favorite
-                        : Icons.favorite_border,
-                    color: recipe.isFavorite
-                        ? const Color(0xFFB12C16)
-                        : Colors.white,
-                    size: 20,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          
         ],
       ),
     );
