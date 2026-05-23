@@ -22,6 +22,10 @@ class AppStrings {
   static const String loginFailed = 'Login failed. Please try again.';
   static const String loginSuccessful = 'Login successful!';
 
+  // Home
+  static const String searchRecipes = 'Search recipes...';
+  static const String min = 'min';
+
   // Placeholders
   static const String signUpScreenComingSoon = 'Sign Up Screen - Coming Soon';
   static const String routeNotFound = 'Route not found';

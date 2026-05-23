@@ -134,6 +134,8 @@ class LoginForm extends StatelessWidget {
                             backgroundColor: AppColors.success,
                           ),
                         );
+                        Navigator.of(context)
+                            .pushReplacementNamed(AppRoutes.home);
                       }
                     },
                     child: CustomButton(

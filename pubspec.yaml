@@ -45,6 +45,9 @@ dependencies:
   # Error Handling
   dartz: ^0.10.1
 
+  # Image Loading
+  cached_network_image: ^3.4.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

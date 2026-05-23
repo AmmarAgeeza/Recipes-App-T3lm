@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import '../constants/app_routes.dart';
-import '../constants/app_strings.dart';
+import '../constants/app_import.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
+import '../../features/home/presentation/screens/home_screen.dart';
+import '../../features/home/presentation/cubits/home_cubit.dart';
 
 class AppRouter {
   AppRouter._();
@@ -11,6 +11,13 @@ class AppRouter {
       case AppRoutes.login:
         return MaterialPageRoute(
           builder: (_) => const LoginScreen(),
+        );
+      case AppRoutes.home:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => sl<HomeCubit>()..loadRecipes(),
+            child: const HomeScreen(),
+          ),
         );
       case AppRoutes.signUp:
         return MaterialPageRoute(
