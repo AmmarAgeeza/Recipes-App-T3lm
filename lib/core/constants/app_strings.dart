@@ -29,4 +29,14 @@ class AppStrings {
   // Placeholders
   static const String signUpScreenComingSoon = 'Sign Up Screen - Coming Soon';
   static const String routeNotFound = 'Route not found';
+
+  // Profile
+  static const String personalInformation = 'PERSONAL INFORMATION';
+  static const String accountDetails = 'ACCOUNT DETAILS';
+  static const String firstName = 'First Name';
+  static const String lastName = 'Last Name';
+  static const String gender = 'Gender';
+  static const String username = 'Username';
+  static const String email = 'Email';
+  static const String logout = 'Logout';
 }

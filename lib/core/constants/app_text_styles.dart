@@ -100,4 +100,14 @@ class AppTextStyles {
     color: AppColors.signUpLink,
     fontFamily: _fontFamily,
   );
+
+  // Section Heading (Profile)
+  static const TextStyle sectionHeading = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    height: 20 / 14,
+    letterSpacing: 0.7,
+    color: AppColors.link,
+    fontFamily: _fontFamily,
+  );
 }

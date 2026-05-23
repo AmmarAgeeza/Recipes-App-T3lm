@@ -10,23 +10,26 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       title: Row(
         children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: const Color(0x1AB12C16), width: 2),
-            ),
-            child: ClipOval(
-              child: Image.network(
-                'https://www.figma.com/api/mcp/asset/b3a147e0-851f-4f47-a664-d5badbeea25e',
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    color: AppColors.inputBackground,
-                    child: const Icon(Icons.person, color: AppColors.bodyText),
-                  );
-                },
+          GestureDetector(
+            onTap: () => Navigator.pushNamed(context, AppRoutes.profile),
+            child: Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: const Color(0x1AB12C16), width: 2),
+              ),
+              child: ClipOval(
+                child: Image.network(
+                  'https://www.figma.com/api/mcp/asset/b3a147e0-851f-4f47-a664-d5badbeea25e',
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      color: AppColors.inputBackground,
+                      child: const Icon(Icons.person, color: AppColors.bodyText),
+                    );
+                  },
+                ),
               ),
             ),
           ),
