@@ -4,7 +4,7 @@ import 'app_colors.dart';
 class AppTextStyles {
   AppTextStyles._();
 
-  static const String _fontFamily = 'PublicSans';
+  static const String fontFamily = 'PublicSans';
 
   // Brand Title
   static const TextStyle brandTitle = TextStyle(
@@ -13,7 +13,7 @@ class AppTextStyles {
     height: 34 / 28,
     letterSpacing: -0.7,
     color: Colors.white,
-    fontFamily: _fontFamily,
+   
   );
 
   // Brand Subtitle
@@ -23,7 +23,7 @@ class AppTextStyles {
     height: 16 / 12,
     letterSpacing: 1.2,
     color: Color(0xE6FFFFFF), // rgba(255,255,255,0.9)
-    fontFamily: _fontFamily,
+   
   );
 
   // Heading
@@ -32,7 +32,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     height: 32 / 24,
     color: AppColors.headingText,
-    fontFamily: _fontFamily,
+   
   );
 
   // Body
@@ -41,7 +41,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
     height: 24 / 16,
     color: AppColors.bodyText,
-    fontFamily: _fontFamily,
+   
   );
 
   // Input Label
@@ -51,7 +51,7 @@ class AppTextStyles {
     height: 20 / 14,
     letterSpacing: 0.14,
     color: AppColors.bodyText,
-    fontFamily: _fontFamily,
+   
   );
 
   // Input Text
@@ -60,7 +60,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
     height: 1.0,
     color: AppColors.bodyText,
-    fontFamily: _fontFamily,
+   
   );
 
   // Input Hint
@@ -69,7 +69,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
     height: 1.0,
     color: AppColors.inputHint,
-    fontFamily: _fontFamily,
+   
   );
 
   // Button Text
@@ -78,7 +78,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
     height: 24 / 16,
     color: AppColors.primaryText,
-    fontFamily: _fontFamily,
+   
   );
 
   // Link Text
@@ -88,7 +88,7 @@ class AppTextStyles {
     height: 20 / 14,
     letterSpacing: 0.14,
     color: AppColors.link,
-    fontFamily: _fontFamily,
+   
   );
 
   // Sign Up Link Text
@@ -98,7 +98,7 @@ class AppTextStyles {
     height: 20 / 14,
     letterSpacing: 0.14,
     color: AppColors.signUpLink,
-    fontFamily: _fontFamily,
+   
   );
 
   // Section Heading (Profile)
@@ -108,6 +108,6 @@ class AppTextStyles {
     height: 20 / 14,
     letterSpacing: 0.7,
     color: AppColors.link,
-    fontFamily: _fontFamily,
+   
   );
 }

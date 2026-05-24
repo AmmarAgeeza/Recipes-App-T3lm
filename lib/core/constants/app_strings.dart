@@ -18,7 +18,8 @@ class AppStrings {
   static const String signUp = 'Sign up';
 
   // Validation Messages
-  static const String invalidCredentials = 'Please enter a valid email and password';
+  static const String invalidCredentials =
+      'Please enter a valid email and password';
   static const String loginFailed = 'Login failed. Please try again.';
   static const String loginSuccessful = 'Login successful!';
 

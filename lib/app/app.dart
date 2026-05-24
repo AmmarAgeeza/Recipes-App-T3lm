@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
       title: AppStrings.appName,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      initialRoute: AppRoutes.login,
+      initialRoute: AppRoutes.profile,
       onGenerateRoute: AppRouter.onGenerateRoute,
     );
   }
