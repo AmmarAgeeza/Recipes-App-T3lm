@@ -48,6 +48,10 @@ dependencies:
   # Image Loading
   cached_network_image: ^3.4.1
 
+  #networking
+  dio: ^5.9.2
+  fluttertoast: ^9.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

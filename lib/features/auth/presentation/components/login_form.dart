@@ -1,4 +1,8 @@
+import 'package:recipes_app_t3lm/core/utils/app_toast.dart';
+import 'package:recipes_app_t3lm/features/auth/presentation/cubits/login_cubit.dart';
+
 import '../../../../core/constants/app_import.dart';
+import '../cubits/login_state.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -62,7 +66,7 @@ class _LoginFormState extends State<LoginForm> {
                   hint: AppStrings.emailHint,
                   icon: Icons.email_outlined,
                   controller: email,
-                  keyboardType: TextInputType.emailAddress,
+                  keyboardType: TextInputType.name,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "please Enter Your Email";
@@ -100,11 +104,40 @@ class _LoginFormState extends State<LoginForm> {
                 ),
                 const SizedBox(height: AppSizes.formGap),
                 // Login Button
-                CustomButton(
-                  text: AppStrings.login,
-                  isLoading: false,
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {}
+                BlocConsumer<LoginCubit, LoginState>(
+                  listener: (context, state) {
+                    if (state.loginState == RequestState.success) {
+                      showToast(
+                        state: ToastState.success,
+                        message: "Login succssfully",
+                      );
+                      showToast(
+                        state: ToastState.success,
+                        message:
+                            "welcome to our app, ${state.loginModel?.username ?? ""}",
+                      );
+                      Navigator.pushReplacementNamed(context, AppRoutes.home);
+                    }
+                    if (state.loginState == RequestState.error) {
+                      showToast(
+                        state: ToastState.error,
+                        message: state.errorMessage,
+                      );
+                    }
+                  },
+                  builder: (context, state) {
+                    return CustomButton(
+                      text: AppStrings.login,
+                      isLoading: state.loginState == RequestState.loading,
+                      onPressed: () async {
+                        if (formKey.currentState!.validate()) {
+                          context.read<LoginCubit>().login(
+                            username: email.text,
+                            password: password.text,
+                          );
+                        }
+                      },
+                    );
                   },
                 ),
               ],

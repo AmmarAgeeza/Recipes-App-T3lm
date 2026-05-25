@@ -6,6 +6,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       backgroundColor: const Color(0xCCF8F9FF),
       elevation: 0,
       title: Row(
@@ -26,7 +27,10 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                   errorBuilder: (context, error, stackTrace) {
                     return Container(
                       color: AppColors.inputBackground,
-                      child: const Icon(Icons.person, color: AppColors.bodyText),
+                      child: const Icon(
+                        Icons.person,
+                        color: AppColors.bodyText,
+                      ),
                     );
                   },
                 ),
